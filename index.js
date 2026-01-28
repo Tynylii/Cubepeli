@@ -13,6 +13,18 @@ const bounce = -0.6;
 const friction = 0.98;
 const hitThreshold = 2; // Miniminopeus, jolla osumasta saa rahaa
 
+const list = [];
+list.push("red");
+list.push("blue");
+list.push("green");
+
+var selection;
+
+function getrandomcolor() {
+    const randomindex = Math.floor(Math.random() * list.length);
+    selection = list[randomindex];
+}
+
 function physicsLoop() {
     if (!isHolding) {
         velocityY += gravity;
@@ -30,6 +42,9 @@ function physicsLoop() {
             if (Math.abs(velocityY) > hitThreshold) {
                 moneyamount++;
                 money.textContent = moneyamount + "$";
+
+                getrandomcolor();
+                document.body.style.backgroundColor = selection;
             }
             velocityY *= bounce;
             if (Math.abs(velocityY) < 1) velocityY = 0;
@@ -38,6 +53,9 @@ function physicsLoop() {
             if (Math.abs(velocityY) > hitThreshold) {
                 moneyamount++;
                 money.textContent = moneyamount + "$";
+
+                getrandomcolor();
+                document.body.style.backgroundColor = selection;
             }
             velocityY *= bounce;
         }
@@ -48,6 +66,9 @@ function physicsLoop() {
             if (Math.abs(velocityX) > hitThreshold) {
                 moneyamount++;
                 money.textContent = moneyamount + "$";
+
+                getrandomcolor();
+                document.body.style.backgroundColor = selection;
             }
             velocityX *= bounce;
         } else if (posX < 0) {
@@ -55,6 +76,9 @@ function physicsLoop() {
             if (Math.abs(velocityX) > hitThreshold) {
                 moneyamount++;
                 money.textContent = moneyamount + "$";
+
+                getrandomcolor();
+                document.body.style.backgroundColor = selection;
             }
             velocityX *= bounce;
         }

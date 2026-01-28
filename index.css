@@ -13,12 +13,16 @@ body {
     height: 50px;
     position: absolute;
     cursor: grab;
+    border: 2px;
+    border-color: antiquewhite;
 }
 
 .money {
     background-color: gray;
     color: aquamarine;
     margin: auto;
+    border: 2px;
+    border-color: antiquewhite;
     border-radius: 10px;
     width: 200px;
     height: 100px;

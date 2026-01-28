@@ -1,16 +1,17 @@
 const cube = document.getElementById('cube');
-const money = document.getElementById("money")
+const money = document.getElementById("money");
 let moneyamount = 0;
 let isHolding = false;
 
-// 1. SPAWNAUS KESKELLE: Lasketaan keskipiste heti alussa
 let posX = (window.innerWidth / 2) - 25;
 let posY = (window.innerHeight / 2) - 25;
 let velocityY = 0;
 let velocityX = 0;
+
 const gravity = 0.8;
 const bounce = -0.6;
 const friction = 0.98;
+const hitThreshold = 2; // Miniminopeus, jolla osumasta saa rahaa
 
 function physicsLoop() {
     if (!isHolding) {
@@ -25,28 +26,37 @@ function physicsLoop() {
         // Pystysuunnan rajat (Lattia ja Katto)
         if (posY > floor) {
             posY = floor;
+            // Anna rahaa vain jos iskeytyy lattiaan tarpeeksi kovaa
+            if (Math.abs(velocityY) > hitThreshold) {
+                moneyamount++;
+                money.textContent = moneyamount + "$";
+            }
             velocityY *= bounce;
-            moneyamount++
-            money.textContent = moneyamount + "$"
             if (Math.abs(velocityY) < 1) velocityY = 0;
         } else if (posY < 0) {
             posY = 0;
+            if (Math.abs(velocityY) > hitThreshold) {
+                moneyamount++;
+                money.textContent = moneyamount + "$";
+            }
             velocityY *= bounce;
-              moneyamount++
-            money.textContent = moneyamount + "$"
         }
 
         // Vaakasuunnan rajat (Seinät)
         if (posX > wall) {
             posX = wall;
+            if (Math.abs(velocityX) > hitThreshold) {
+                moneyamount++;
+                money.textContent = moneyamount + "$";
+            }
             velocityX *= bounce;
-            moneyamount++
-            money.textContent = moneyamount + "$"
         } else if (posX < 0) {
             posX = 0;
+            if (Math.abs(velocityX) > hitThreshold) {
+                moneyamount++;
+                money.textContent = moneyamount + "$";
+            }
             velocityX *= bounce;
-            moneyamount++
-            money.textContent = moneyamount + "$"
         }
 
         cube.style.top = posY + 'px';
@@ -72,11 +82,10 @@ window.addEventListener('mousemove', (e) => {
         const floor = window.innerHeight - 50;
         const wall = window.innerWidth - 50;
 
-        // 2. RAJOITETAAN VETÄMINEN: Estetään hiirtä viemästä kuutiota rajojen yli
-        // Käytetään Math.min ja Math.max pitämään arvot välillä 0 - max
         let newX = Math.max(0, Math.min(e.clientX - 25, wall));
         let newY = Math.max(0, Math.min(e.clientY - 25, floor));
 
+        // Lasketaan nopeus liikkeen perusteella heittoa varten
         velocityX = newX - posX;
         velocityY = newY - posY;
 

@@ -119,3 +119,24 @@ window.addEventListener('mousemove', (e) => {
         cube.style.top = posY + 'px';
     }
 });
+
+function save() {
+  setInterval(() => {
+    localStorage.setItem("money", moneyamount);
+  }, 500);
+}
+
+function load() {
+  moneyamount = parseInt(localStorage.getItem("moneyamount")) || 0;
+
+  moneyamount = moneyamount;
+}
+
+function reloadmoney() {
+    
+}
+
+window.onload = function() {
+  load();
+  save();
+};

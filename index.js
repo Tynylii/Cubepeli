@@ -124,7 +124,7 @@ function save() {
   }, 500);
 }
 
-window.onclose() {
+window.onclose() = function() {
     save();
 }
 

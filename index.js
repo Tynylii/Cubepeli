@@ -124,6 +124,10 @@ function save() {
   }, 500);
 }
 
+window.onclose() {
+    save();
+}
+
 function load() {
   moneyamount = parseInt(localStorage.getItem("moneyamount")) || 0;
 

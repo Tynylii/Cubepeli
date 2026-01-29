@@ -157,7 +157,7 @@ cube.addEventListener('touchstart', (e) => {
     e.preventDefault(); 
 }, { passive: false });
 
-window.addEventListener('touchend', () => {
+cube.addEventListener('touchend', () => {
     isHolding = false;
 });
 

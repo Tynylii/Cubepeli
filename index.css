@@ -58,6 +58,10 @@ body {
   border-radius: 8px;
 }
 
+#cube {
+    touch-action: none;
+}
+
 .buy {
   padding: 10px 20px;
   cursor: pointer;

@@ -1,48 +1,41 @@
-const cube = document.getElementById('cube');
 const money = document.getElementById("money");
 let moneyamount = 0;
-let isHolding = false;
-
-let posX = (window.innerWidth / 2) - 25;
-let posY = (window.innerHeight / 2) - 25;
-let velocityY = 0;
-let velocityX = 0;
 
 const gravity = 0.8;
 const bounce = -0.6;
 const friction = 0.98;
 const hitThreshold = 2;
 
+const cubes = []; // kaikki kuutiot tänne
+
+// värit
 const list = [
-  "AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black",
-  "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse",
-  "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue",
-  "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki",
-  "DarkMagenta", "DarkOliveGreen", "DarkOrange", "DarkOrchid", "DarkRed", "DarkSeaGreen",
-  "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet",
-  "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite",
-  "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey",
-  "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki",
-  "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral",
-  "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink",
-  "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey",
-  "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon",
-  "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen",
-  "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed",
-  "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace",
-  "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen",
-  "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum",
-  "PowderBlue", "Purple", "RebeccaPurple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown",
-  "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue",
-  "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle",
-  "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen"
+  "AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black",
+  "BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse",
+  "Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue",
+  "DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki",
+  "DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSeaGreen",
+  "DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet",
+  "DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite",
+  "ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey",
+  "Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki",
+  "Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral",
+  "LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink",
+  "LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey",
+  "LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon",
+  "MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen",
+  "MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed",
+  "MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace",
+  "Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen",
+  "PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum",
+  "PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown",
+  "SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue",
+  "SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle",
+  "Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"
 ];
 
-let selection;
-
 function getrandomcolor() {
-    const randomindex = Math.floor(Math.random() * list.length);
-    selection = list[randomindex];
+    return list[Math.floor(Math.random() * list.length)];
 }
 
 function addMoney() {
@@ -51,89 +44,141 @@ function addMoney() {
     localStorage.setItem("money", moneyamount);
 }
 
+// Luo uuden kuution
+function createCube() {
+    const el = document.createElement("div");
+    el.className = "cube";
+    document.body.appendChild(el);
+
+    const cube = {
+        el: el,
+        posX: (window.innerWidth / 2) - 25,
+        posY: (window.innerHeight / 2) - 25,
+        velX: 0,
+        velY: 0,
+        isHolding: false
+    };
+
+    // hiiri
+    el.addEventListener("mousedown", () => {
+        cube.isHolding = true;
+        el.style.cursor = "grabbing";
+    });
+
+    window.addEventListener("mouseup", () => {
+        cube.isHolding = false;
+        el.style.cursor = "grab";
+    });
+
+    window.addEventListener("mousemove", (e) => {
+        if (cube.isHolding) {
+            const wall = window.innerWidth - 50;
+            const floor = window.innerHeight - 50;
+
+            let newX = Math.max(0, Math.min(e.clientX - 25, wall));
+            let newY = Math.max(0, Math.min(e.clientY - 25, floor));
+
+            cube.velX = newX - cube.posX;
+            cube.velY = newY - cube.posY;
+
+            cube.posX = newX;
+            cube.posY = newY;
+
+            cube.el.style.left = cube.posX + "px";
+            cube.el.style.top = cube.posY + "px";
+        }
+    });
+
+    // kosketus
+    el.addEventListener("touchstart", (e) => {
+        cube.isHolding = true;
+        e.preventDefault();
+    }, { passive: false });
+
+    el.addEventListener("touchend", () => {
+        cube.isHolding = false;
+    });
+
+    window.addEventListener("touchmove", (e) => {
+        if (cube.isHolding) {
+            const touch = e.touches[0];
+            const wall = window.innerWidth - 50;
+            const floor = window.innerHeight - 50;
+
+            let newX = Math.max(0, Math.min(touch.clientX - 25, wall));
+            let newY = Math.max(0, Math.min(touch.clientY - 25, floor));
+
+            cube.velX = newX - cube.posX;
+            cube.velY = newY - cube.posY;
+
+            cube.posX = newX;
+            cube.posY = newY;
+
+            cube.el.style.left = cube.posX + "px";
+            cube.el.style.top = cube.posY + "px";
+
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    cubes.push(cube);
+}
+
+// fysiikat kaikille kuutioille
 function physicsLoop() {
-    if (!isHolding) {
-        velocityY += gravity;
-        posY += velocityY;
-        posX += velocityX;
-        velocityX *= friction;
+    const floor = window.innerHeight - 50;
+    const wall = window.innerWidth - 50;
 
-        const floor = window.innerHeight - 50;
-        const wall = window.innerWidth - 50;
+    cubes.forEach(cube => {
+        if (!cube.isHolding) {
+            cube.velY += gravity;
+            cube.posY += cube.velY;
+            cube.posX += cube.velX;
+            cube.velX *= friction;
 
-        if (posY > floor) {
-            posY = floor;
-            if (Math.abs(velocityY) > hitThreshold) {
-                addMoney();
-                getrandomcolor();
-                document.body.style.backgroundColor = selection;
+            if (cube.posY > floor) {
+                cube.posY = floor;
+                if (Math.abs(cube.velY) > hitThreshold) {
+                    addMoney();
+                    document.body.style.backgroundColor = getrandomcolor();
+                }
+                cube.velY *= bounce;
             }
-            velocityY *= bounce;
-            if (Math.abs(velocityY) < 1) velocityY = 0;
-        } else if (posY < 0) {
-            posY = 0;
-            if (Math.abs(velocityY) > hitThreshold) {
-                addMoney();
-                getrandomcolor();
-                document.body.style.backgroundColor = selection;
+
+            if (cube.posY < 0) {
+                cube.posY = 0;
+                cube.velY *= bounce;
             }
-            velocityY *= bounce;
+
+            if (cube.posX > wall) {
+                cube.posX = wall;
+                cube.velX *= bounce;
+            }
+
+            if (cube.posX < 0) {
+                cube.posX = 0;
+                cube.velX *= bounce;
+            }
+
+            cube.el.style.left = cube.posX + "px";
+            cube.el.style.top = cube.posY + "px";
         }
+    });
 
-        if (posX > wall) {
-            posX = wall;
-            if (Math.abs(velocityX) > hitThreshold) {
-                addMoney();
-                getrandomcolor();
-                document.body.style.backgroundColor = selection;
-            }
-            velocityX *= bounce;
-        } else if (posX < 0) {
-            posX = 0;
-            if (Math.abs(velocityX) > hitThreshold) {
-                addMoney();
-                getrandomcolor();
-                document.body.style.backgroundColor = selection;
-            }
-            velocityX *= bounce;
-        }
-
-        cube.style.top = posY + 'px';
-        cube.style.left = posX + 'px';
-    }
     requestAnimationFrame(physicsLoop);
 }
 
-physicsLoop();
+function morecubes(amount, cost) {
+    if (moneyamount < cost) return;
 
-cube.addEventListener('mousedown', () => {
-    isHolding = true;
-    cube.style.cursor = 'grabbing';
-});
+    moneyamount -= cost;
+    money.textContent = moneyamount + "$";
+    localStorage.setItem("money", moneyamount);
 
-window.addEventListener('mouseup', () => {
-    isHolding = false;
-    cube.style.cursor = 'grab';
-});
-
-window.addEventListener('mousemove', (e) => {
-    if (isHolding) {
-        const floor = window.innerHeight - 50;
-        const wall = window.innerWidth - 50;
-
-        let newX = Math.max(0, Math.min(e.clientX - 25, wall));
-        let newY = Math.max(0, Math.min(e.clientY - 25, floor));
-
-        velocityX = newX - posX;
-        velocityY = newY - posY;
-
-        posX = newX;
-        posY = newY;
-        
-        cube.style.left = posX + 'px';
-        cube.style.top = posY + 'px';
+    for (let i = 0; i < amount; i++) {
+        createCube();
     }
-});
+}
 
 function load() {
   moneyamount = parseInt(localStorage.getItem("money")) || 0;
@@ -146,40 +191,10 @@ function reloadmoney() {
 window.onload = function() {
   load();
   reloadmoney();
+  createCube();
+  physicsLoop();
 };
 
 window.onbeforeunload = function() {
   localStorage.setItem("money", moneyamount);
 };
-
-cube.addEventListener('touchstart', (e) => {
-    isHolding = true;
-    e.preventDefault(); 
-}, { passive: false });
-
-cube.addEventListener('touchend', () => {
-    isHolding = false;
-});
-
-window.addEventListener('touchmove', (e) => {
-    if (isHolding) {
-        const floor = window.innerHeight - 50;
-        const wall = window.innerWidth - 50;
-
-        const touch = e.touches[0];
-        
-        let newX = Math.max(0, Math.min(touch.clientX - 25, wall));
-        let newY = Math.max(0, Math.min(touch.clientY - 25, floor));
-
-        velocityX = newX - posX;
-        velocityY = newY - posY;
-
-        posX = newX;
-        posY = newY;
-        
-        cube.style.left = posX + 'px';
-        cube.style.top = posY + 'px';
-
-        e.preventDefault();
-    }
-}, { passive: false });

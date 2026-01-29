@@ -11,17 +11,44 @@ let velocityX = 0;
 const gravity = 0.8;
 const bounce = -0.6;
 const friction = 0.98;
-const hitThreshold = 2; // Miniminopeus, jolla osumasta saa rahaa
+const hitThreshold = 2;
 
 const list = [
-  "AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black", "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse", "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue", "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki", "DarkMagenta", "DarkOliveGreen", "DarkOrange", "DarkOrchid", "DarkRed", "Salmon", "DarkSeaGreen", "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet", "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite", "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey", "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki", "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral", "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink", "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey", "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon", "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen", "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed", "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace", "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen", "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum", "PowderBlue", "Purple", "RebeccaPurple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown", "Salmon", "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue", "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen"
+  "AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black",
+  "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse",
+  "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue",
+  "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki",
+  "DarkMagenta", "DarkOliveGreen", "DarkOrange", "DarkOrchid", "DarkRed", "DarkSeaGreen",
+  "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet",
+  "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite",
+  "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey",
+  "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki",
+  "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral",
+  "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink",
+  "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey",
+  "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon",
+  "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen",
+  "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed",
+  "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace",
+  "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen",
+  "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum",
+  "PowderBlue", "Purple", "RebeccaPurple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown",
+  "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue",
+  "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle",
+  "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen"
 ];
 
-var selection;
+let selection;
 
 function getrandomcolor() {
     const randomindex = Math.floor(Math.random() * list.length);
     selection = list[randomindex];
+}
+
+function addMoney() {
+    moneyamount++;
+    money.textContent = moneyamount + "$";
+    localStorage.setItem("money", moneyamount);
 }
 
 function physicsLoop() {
@@ -37,9 +64,7 @@ function physicsLoop() {
         if (posY > floor) {
             posY = floor;
             if (Math.abs(velocityY) > hitThreshold) {
-                moneyamount++;
-                money.textContent = moneyamount + "$";
-
+                addMoney();
                 getrandomcolor();
                 document.body.style.backgroundColor = selection;
             }
@@ -48,9 +73,7 @@ function physicsLoop() {
         } else if (posY < 0) {
             posY = 0;
             if (Math.abs(velocityY) > hitThreshold) {
-                moneyamount++;
-                money.textContent = moneyamount + "$";
-
+                addMoney();
                 getrandomcolor();
                 document.body.style.backgroundColor = selection;
             }
@@ -60,9 +83,7 @@ function physicsLoop() {
         if (posX > wall) {
             posX = wall;
             if (Math.abs(velocityX) > hitThreshold) {
-                moneyamount++;
-                money.textContent = moneyamount + "$";
-
+                addMoney();
                 getrandomcolor();
                 document.body.style.backgroundColor = selection;
             }
@@ -70,9 +91,7 @@ function physicsLoop() {
         } else if (posX < 0) {
             posX = 0;
             if (Math.abs(velocityX) > hitThreshold) {
-                moneyamount++;
-                money.textContent = moneyamount + "$";
-
+                addMoney();
                 getrandomcolor();
                 document.body.style.backgroundColor = selection;
             }
@@ -116,20 +135,8 @@ window.addEventListener('mousemove', (e) => {
     }
 });
 
-function save() {
-  setInterval(() => {
-    localStorage.setItem("money", moneyamount);
-  }, 500);
-}
-
-window.onclose() = function() {
-    save();
-}
-
 function load() {
-  moneyamount = parseInt(localStorage.getItem("moneyamount")) || 0;
-
-  moneyamount = moneyamount;
+  moneyamount = parseInt(localStorage.getItem("money")) || 0;
 }
 
 function reloadmoney() {
@@ -139,7 +146,10 @@ function reloadmoney() {
 window.onload = function() {
   load();
   reloadmoney();
-  save();
+};
+
+window.onbeforeunload = function() {
+  localStorage.setItem("money", moneyamount);
 };
 
 cube.addEventListener('touchstart', (e) => {

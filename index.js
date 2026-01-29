@@ -6,9 +6,8 @@ const bounce = -0.6;
 const friction = 0.98;
 const hitThreshold = 2;
 
-const cubes = []; // kaikki kuutiot tänne
+const cubes = [];
 
-// värit
 const list = [
   "AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black",
   "BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse",
@@ -44,7 +43,6 @@ function addMoney() {
     localStorage.setItem("money", moneyamount);
 }
 
-// Luo uuden kuution
 function createCube() {
     const el = document.createElement("div");
     el.className = "cube";
@@ -89,7 +87,6 @@ function createCube() {
         }
     });
 
-    // kosketus
     el.addEventListener("touchstart", (e) => {
         cube.isHolding = true;
         e.preventDefault();

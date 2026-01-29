@@ -124,7 +124,6 @@ function createCube() {
     cubes.push(cube);
 }
 
-// fysiikat kaikille kuutioille
 function physicsLoop() {
     const floor = window.innerHeight - 50;
     const wall = window.innerWidth - 50;
@@ -136,6 +135,7 @@ function physicsLoop() {
             cube.posX += cube.velX;
             cube.velX *= friction;
 
+            // LATTIA
             if (cube.posY > floor) {
                 cube.posY = floor;
                 if (Math.abs(cube.velY) > hitThreshold) {
@@ -145,18 +145,33 @@ function physicsLoop() {
                 cube.velY *= bounce;
             }
 
+            // KATTO
             if (cube.posY < 0) {
                 cube.posY = 0;
+                if (Math.abs(cube.velY) > hitThreshold) {
+                    addMoney();
+                    document.body.style.backgroundColor = getrandomcolor();
+                }
                 cube.velY *= bounce;
             }
 
+            // OIKEA REUNA
             if (cube.posX > wall) {
                 cube.posX = wall;
+                if (Math.abs(cube.velX) > hitThreshold) {
+                    addMoney();
+                    document.body.style.backgroundColor = getrandomcolor();
+                }
                 cube.velX *= bounce;
             }
 
+            // VASEN REUNA
             if (cube.posX < 0) {
                 cube.posX = 0;
+                if (Math.abs(cube.velX) > hitThreshold) {
+                    addMoney();
+                    document.body.style.backgroundColor = getrandomcolor();
+                }
                 cube.velX *= bounce;
             }
 
@@ -167,6 +182,7 @@ function physicsLoop() {
 
     requestAnimationFrame(physicsLoop);
 }
+
 
 function morecubes(amount, cost) {
     if (moneyamount < cost) return;

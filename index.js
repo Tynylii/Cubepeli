@@ -59,7 +59,6 @@ function physicsLoop() {
             velocityY *= bounce;
         }
 
-        // Vaakasuunnan rajat (Seinät)
         if (posX > wall) {
             posX = wall;
             if (Math.abs(velocityX) > hitThreshold) {
@@ -108,7 +107,6 @@ window.addEventListener('mousemove', (e) => {
         let newX = Math.max(0, Math.min(e.clientX - 25, wall));
         let newY = Math.max(0, Math.min(e.clientY - 25, floor));
 
-        // Lasketaan nopeus liikkeen perusteella heittoa varten
         velocityX = newX - posX;
         velocityY = newY - posY;
 
@@ -133,10 +131,43 @@ function load() {
 }
 
 function reloadmoney() {
-    
+  money.textContent = moneyamount + "$";
 }
 
 window.onload = function() {
   load();
+  reloadmoney();
   save();
 };
+
+cube.addEventListener('touchstart', (e) => {
+    isHolding = true;
+    e.preventDefault(); 
+}, { passive: false });
+
+window.addEventListener('touchend', () => {
+    isHolding = false;
+});
+
+window.addEventListener('touchmove', (e) => {
+    if (isHolding) {
+        const floor = window.innerHeight - 50;
+        const wall = window.innerWidth - 50;
+
+        const touch = e.touches[0];
+        
+        let newX = Math.max(0, Math.min(touch.clientX - 25, wall));
+        let newY = Math.max(0, Math.min(touch.clientY - 25, floor));
+
+        velocityX = newX - posX;
+        velocityY = newY - posY;
+
+        posX = newX;
+        posY = newY;
+        
+        cube.style.left = posX + 'px';
+        cube.style.top = posY + 'px';
+
+        e.preventDefault();
+    }
+}, { passive: false });

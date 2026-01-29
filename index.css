@@ -20,25 +20,14 @@ body {
 .money {
     background-color: gray;
     color: aquamarine;
-    margin: auto;
-    border: 2px;
-    border-color: antiquewhite;
-    border-radius: 10px;
     width: 200px;
     height: 100px;
-    border: 10px;
-    align-items: center;
-    align-content: center;
-    align-self: center;
-    justify-content: center;
+    border-radius: 10px;
     font-size: 5rem;
     text-align: center;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-
-    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .shop {

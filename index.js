@@ -125,7 +125,7 @@ function save() {
 }
 
 window.onclose() = function() {
-    save();
+  save();
 }
 
 function load() {

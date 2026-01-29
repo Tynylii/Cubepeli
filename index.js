@@ -34,10 +34,8 @@ function physicsLoop() {
         const floor = window.innerHeight - 50;
         const wall = window.innerWidth - 50;
 
-        // Pystysuunnan rajat (Lattia ja Katto)
         if (posY > floor) {
             posY = floor;
-            // Anna rahaa vain jos iskeytyy lattiaan tarpeeksi kovaa
             if (Math.abs(velocityY) > hitThreshold) {
                 moneyamount++;
                 money.textContent = moneyamount + "$";
@@ -125,7 +123,7 @@ function save() {
 }
 
 window.onclose() = function() {
-  save();
+    save();
 }
 
 function load() {

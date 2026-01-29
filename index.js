@@ -57,7 +57,6 @@ function createCube() {
         isHolding: false
     };
 
-    // hiiri
     el.addEventListener("mousedown", () => {
         cube.isHolding = true;
         el.style.cursor = "grabbing";
@@ -193,10 +192,6 @@ function morecubes(amount, cost) {
     }
 }
 
-function load() {
-  moneyamount = parseInt(localStorage.getItem("money")) || 0;
-}
-
 function reloadmoney() {
   money.textContent = moneyamount + "$";
 }
@@ -208,6 +203,17 @@ window.onload = function() {
   physicsLoop();
 };
 
+function load() {
+    moneyamount = parseInt(localStorage.getItem("money")) || 0;
+    
+    const savedCubeCount = parseInt(localStorage.getItem("cubeCount")) || 1;
+    
+    for (let i = 0; i < savedCubeCount - 1; i++) {
+        createCube();
+    }
+}
+
 window.onbeforeunload = function() {
-  localStorage.setItem("money", moneyamount);
+    localStorage.setItem("money", moneyamount);
+    localStorage.setItem("cubeCount", cubes.length);
 };

@@ -33,6 +33,12 @@ const list = [
   "Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"
 ];
 
+const sound1 = new Audio('bouncesound1.mp3');
+
+function playSound() {
+    sound1.play();
+}
+
 function getrandomcolor() {
     return list[Math.floor(Math.random() * list.length)];
 }

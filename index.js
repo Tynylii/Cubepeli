@@ -33,7 +33,7 @@ const list = [
   "Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"
 ];
 
-const sound1 = new Audio('bouncesound1.mp3');
+const sound1 = new Audio('audio/bouncesound1.mp3');
 
 function playSound() {
     sound1.play();
@@ -47,6 +47,7 @@ function addMoney() {
     moneyamount++;
     money.textContent = moneyamount + "$";
     localStorage.setItem("money", moneyamount);
+    playSound();
 }
 
 function createCube() {
@@ -184,7 +185,6 @@ function physicsLoop() {
 
     requestAnimationFrame(physicsLoop);
 }
-
 
 function morecubes(amount, cost) {
     if (moneyamount < cost) return;

@@ -208,7 +208,15 @@ function load() {
     }
 }
 
-window.onbeforeunload = function() {
+function save() {
     localStorage.setItem("money", moneyamount);
     localStorage.setItem("cubeCount", cubes.length);
-};
+}
+
+window.onbeforeunload = function() {
+    save();
+}
+
+function switchHtml(targetPage) {
+    window.location.href = targetPage;
+}

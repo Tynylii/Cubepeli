@@ -8,4 +8,7 @@ function morecubes(amount, cost) {
     for (let i = 0; i < amount; i++) {
         createCube();
     }
+
+    
+    switchHtml(index.html)
 }

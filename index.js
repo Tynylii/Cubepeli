@@ -216,7 +216,3 @@ function save() {
 window.onbeforeunload = function() {
     save();
 }
-
-function switchHtml(targetPage) {
-    window.location.href = targetPage;
-}

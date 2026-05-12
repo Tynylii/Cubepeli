@@ -9,6 +9,7 @@ function morecubes(amount, cost) {
         createCube();
     }
 
-    
-    switchHtml(index.html)
+    save();
+
+    window.location.href = "index.html";
 }

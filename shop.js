@@ -1,3 +1,6 @@
+const money = document.getElementById("money");
+let moneyamount = 0;
+
 function morecubes(amount, cost) {
     if (moneyamount < cost) return;
 
@@ -13,3 +16,10 @@ function morecubes(amount, cost) {
 
     window.location.href = "index.html";
 }
+
+
+window.onload = function() {
+    moneyamount = parseInt(localStorage.getItem("money")) || 0;
+    if (money && money.firstElementChild)
+        money.firstElementChild.textContent = moneyamount + "$";
+};
